@@ -1,5 +1,19 @@
 var pattern = "<all_urls>";
 
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+
+function sendRequests() {
+
+	var getReq = httpGet("https://www.resco.net/mobilecrm/support/OfflineHtml.html");
+	console.log(getReq);
+}
+
 function redirect(requestDetails) {
 	console.log("Redirecting from " + requestDetails.url)
   return {
@@ -8,7 +22,7 @@ function redirect(requestDetails) {
 }
 
 chrome.webRequest.onBeforeRequest.addListener(
-  redirect,
+  sendRequests,
   {urls:[pattern]},
   ["blocking"]
 );
