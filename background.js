@@ -3,15 +3,15 @@ var pattern = "<all_urls>";
 function httpGet(theUrl)
 {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.open( "GET", theUrl, false );
     xmlHttp.send( null );
-    return xmlHttp.responseText;
+    return xmlHttp.status;
 }
 
 function sendRequests() {
-
-	var getReq = httpGet("https://www.resco.net/mobilecrm/support/OfflineHtml.html");
-	console.log(getReq);
+    var url = "https://www.resco.net/mobilecrm/support/OfflineHtml.html";
+	var getReq = httpGet(url);
+	console.log(getReq.toString() + " for url: " + url);
 }
 
 function redirect(requestDetails) {
@@ -21,8 +21,8 @@ function redirect(requestDetails) {
   };
 }
 
-chrome.webRequest.onBeforeRequest.addListener(
+chrome.webRequest.onCompleted.addListener(
   sendRequests,
   {urls:[pattern]},
-  ["blocking"]
+  []
 );
